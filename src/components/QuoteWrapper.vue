@@ -2,8 +2,11 @@
 import { ref } from 'vue'
 import $ from 'jquery'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap-vue/dist/bootstrap-vue.css";
+
+import 'bootstrap/dist/css/bootstrap.css';
+
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { stateStore } from "../stores/store";
 export default {
     props: {
@@ -35,7 +38,7 @@ export default {
         },
         selectAllBarcodes() {
 
-         
+
             this.selected_barcode[this.currentTab] = [];
 
             if (!this.selectAll) {
@@ -44,17 +47,15 @@ export default {
                     this.selected_barcode[this.currentTab].push(this.barcodes[i].display)
 
                 }
-
-
             }
-
-
-
         },
         removeChoices() {
 
         }
-    }
+
+        // na computet da se stavat vo poraka 
+    },
+
 
 
 
@@ -93,8 +94,8 @@ export default {
                         <span class="button oval">{{ row.display }}</span>
 
                     </label>
-                    <label for="all">
-                        <input type="checkbox" value="display" id="all" v-model="selectAll" @click="selectAllBarcodes">
+                    <label class="all" for="all">
+                        <input type="checkbox" value="all" id="all" v-model="selectAll" @click="selectAllBarcodes">
                         <span class="button oval">Select All</span>
                     </label>
                 </div>
@@ -102,7 +103,7 @@ export default {
                 <div class="text-center">
                     <button class="button button-small link black text-center">Done</button>
                 </div>
-                <p class="margin-top: 30px;" v-if="(currentTab != 'iOS' && currentTab != 'Android')">
+                <p class="support" v-if="(currentTab != 'iOS' && currentTab != 'Android')">
                     *We still don’t support this platform/framework, but feel free to make a request, and we will make
                     our best to make it available as soon as possible
 

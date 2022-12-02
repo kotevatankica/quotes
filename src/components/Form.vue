@@ -42,7 +42,7 @@ export default {
 
 
         const v$ = useValidate(rules, state)
-
+        console.log(v$);
         const company = ref('');
         const create_acc = ref(true);
         const create_license = ref(false);
@@ -88,9 +88,9 @@ export default {
                         <div class="col-md-6 margin-bottom-30">
                             <div class="form-line">
                                 <label for="first-name" class="sr-only"></label>
-                                <input class="input validate " type="text" id="first-name" name="first_name"
+                                <input class="input   " type="text" id="first-name" name="first_name"
                                     v-model="state.first_name" placeholder="First Name"
-                                    :class="{ 'notvalid': (v$.first_name.$error) }" />
+                                    :class="{ 'notvalid': (v$.first_name.$error)}" />
                                 <div class="form-message animated">
                                     <span class="validate-msg" v-if="v$.first_name.$error">
                                         {{ v$.first_name.$errors[0].$message }}
@@ -102,7 +102,7 @@ export default {
                         <div class="col-md-6 margin-bottom-30">
                             <div class="form-line">
                                 <label for="last-name" class="sr-only"></label>
-                                <input class="input validate" type="text" id="last-name" name="last_name"
+                                <input class="input validate " type="text" id="last-name" name="last_name"
                                     v-model="state.last_name" placeholder="Last Name"
                                     :class="{ 'notvalid': (v$.last_name.$error) }" />
                                 <div class="form-message animated">

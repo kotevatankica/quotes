@@ -40,6 +40,7 @@ export default {
     methods: {
         dis: function (selected_barcodes) {
             console.log(selected_barcode[currentTab])
+            // v-on:selected-barcodes="dis"
         }
     }
 
@@ -49,7 +50,7 @@ export default {
 </script>
 
 <template>
-    <QuoteWrapper :barcodes="barcodes" :tech="technologies" v-on:selected-barcodes="dis"></QuoteWrapper>
+    <QuoteWrapper :barcodes="barcodes" :tech="technologies" ></QuoteWrapper>
 </template>
 
 <style scoped>

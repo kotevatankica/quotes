@@ -230,7 +230,9 @@
 [v-cloak] {
   display: none;
 }
-
+#country .v-select .dropdown-bg {
+  background-color: rebeccapurple;
+}
 footer {
   flex-shrink: 0;
   width: auto;
@@ -657,7 +659,19 @@ html[xmlns] .clearfix {
   padding: 5px !important;
   min-width: 100px;
   text-transform: capitalize;
-  
+  border: 3px solid black;
+  border-radius: 10px;
+  background-color: white;
+  font-weight: 700;
+}
+
+.button-small:hover {
+  color: white;
+  background-color: #000;
+  transition: all 0.3s;
+}
+.support {
+  margin-top: 30px;
 }
 
 .button.link {
@@ -796,11 +810,6 @@ html[xmlns] .clearfix {
   animation-name: backRight;
 }
 
-.proba {
-  background-color: red;
-  color: green;
-  width: 100%;
-}
 .validate-msg {
   bottom: -20px;
   width: 100%;
@@ -1450,12 +1459,10 @@ label.radio_type_btn.radio_selected {
   cursor: pointer;
 }
 
-
 .option-tab {
   border-radius: 20px;
   background-color: #fff;
 }
-
 
 .tabchecked {
   z-index: 1;
@@ -1503,7 +1510,7 @@ label.radio_type_btn.radio_selected {
 
 .shadow-box-title {
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 5px;
 }
 
@@ -1524,7 +1531,6 @@ label.radio_type_btn.radio_selected {
 }
 .tech {
   display: inline-block;
-  
 }
 .tab svg.abs {
   left: 50%;
