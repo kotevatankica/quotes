@@ -5,6 +5,7 @@ export const stateStore = defineStore("store", {
   state: () => {
     return {
       selected_barcode: {},
+      currentTab: "iOS",
     };
   },
 });

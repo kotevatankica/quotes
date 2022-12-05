@@ -21,7 +21,8 @@ export default {
         const selectAll = ref(false);
         var sb = {};
         $.each(props.tech, (i, el) => {
-            sb[el.name] = []
+            sb[el.name] = (store.selected_barcode[el.name]) ? store.selected_barcode[el.name] : []
+
         });
 
         var selected_barcode = ref(sb);
@@ -31,33 +32,46 @@ export default {
             currentTab, selected_barcode, selected_tech, selectAll, store
         }
     },
+    computed: {
+
+        storeSelectedBarcode() {
+
+            this.store.selected_barcode = this.selected_barcode;
+        }
+    },
+
     methods: {
         selectedTab(selectedTab) {
-            this.currentTab = selectedTab;
+
+            this.store.currentTab = selectedTab;
 
         },
-        selectAllBarcodes() {
+        selectAllBarcodes(e) {
 
+            this.selected_barcode[this.store.currentTab] = [];
 
-            this.selected_barcode[this.currentTab] = [];
-
-            if (!this.selectAll) {
+            if (e.target.checked) {
 
                 for (let i in this.barcodes) {
-                    this.selected_barcode[this.currentTab].push(this.barcodes[i].display)
+                    this.selected_barcode[this.store.currentTab].push(this.barcodes[i].display.toString())
 
                 }
             }
-        },
-        removeChoices() {
 
+        },
+        select: function () {
+            this.selectAll = false;
+        },
+        done() {
+
+            this.store.selected_barcode[this.store.currentTab] = this.selected_barcode[this.currentTab];
+        },
+        removeChoices(platform) {
+
+            this.selected_barcode[platform] = [];
         }
 
-        // na computet da se stavat vo poraka 
     },
-
-
-
 
 }
 
@@ -73,9 +87,9 @@ export default {
                 <h2>Request a quote</h2>
                 <p>With more details comes a better quote.</p>
             </div>
-            <div>
+            <div class="m-grid-12 grid-flex rel">
                 <p class="option-tab tech" @click="selectedTab(row.name)" v-for="row in tech"
-                    :class="{ 'tabchecked ': currentTab == row.name }">
+                    :class="{ 'tabchecked ': store.currentTab == row.name }">
                 <div class="tab">
                     <svg class="abs " :width="row.width" :height="row.height">
                         <use :xlink:href="('#' + row.svgName)"></use>
@@ -84,13 +98,12 @@ export default {
                 </p>
             </div>
 
-
             <div class="down rel shadow-box sm-padding-30-50 mb-sm-padding-20 margin-bottom-50">
-                <h3 class="shadow-box-title text-center">{{ currentTab }}</h3>
+                <h3 class="shadow-box-title text-center">{{ store.currentTab }}</h3>
                 <div class="margin-30-0 mb-sm-flex-row-centered">
                     <label v-for="row in barcodes" :for="('ss_' + row.short)">
-                        <input :id="('ss_' + row.short)" type="checkbox" v-model="selected_barcode[currentTab]"
-                            :value="row.display" @change="$emit('selected_barcodes', selected_barcode)" />
+                        <input :id="('ss_' + row.short)" type="checkbox" v-model="selected_barcode[store.currentTab]"
+                            :value="row.display" @change="select" />
                         <span class="button oval">{{ row.display }}</span>
 
                     </label>
@@ -101,9 +114,9 @@ export default {
                 </div>
 
                 <div class="text-center">
-                    <button class="button button-small link black text-center">Done</button>
+                    <button class="button button-small link black text-center" @click="done">Done</button>
                 </div>
-                <p class="support" v-if="(currentTab != 'iOS' && currentTab != 'Android')">
+                <p class="support" v-if="(store.currentTab != 'iOS' && store.currentTab != 'Android')">
                     *We still don’t support this platform/framework, but feel free to make a request, and we will make
                     our best to make it available as soon as possible
 
@@ -120,8 +133,10 @@ export default {
                                 <div class="col-xs-11">
                                     <h3 class="shadow-box-title">{{ platform }}</h3>
                                     <p class="tomato-text grid-11">{{ barcodes.join(', ') }}</p>
+
                                 </div>
-                                <div class="col-xs-1 rel close-button" @click="removeChoices(row.name)">
+                                <div class="col-xs-1 rel close-button" @click="removeChoices(platform)">
+
                                     <span class="mdi mdi-close-circle"></span>
                                 </div>
                             </div>

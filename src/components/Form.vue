@@ -4,12 +4,15 @@ import useValidate from '@vuelidate/core'
 import { required, minLength, email, sameAs, helpers } from '@vuelidate/validators'
 import VueNextSelect from 'vue-next-select'
 import 'vue-next-select/dist/index.min.css'
-
+import { stateStore } from "../stores/store";
 export default {
     components: {
         'vue-select': VueNextSelect,
     },
+
     setup() {
+        const store = stateStore();
+        // const selected_barcode = ref(store.selected_barcode);
         const state = reactive({
             first_name: '',
             last_name: '',
@@ -23,6 +26,7 @@ export default {
             country: '',
 
         })
+
 
         const rules = computed(() => {
             return {
@@ -39,10 +43,9 @@ export default {
             }
         })
 
-
+        const msg = ref('');
 
         const v$ = useValidate(rules, state)
-        console.log(v$);
         const company = ref('');
         const create_acc = ref(true);
         const create_license = ref(false);
@@ -50,10 +53,25 @@ export default {
 
         return {
 
-            state, v$, create_acc, create_license, support_countries, company
+            state, v$, create_acc, create_license, support_countries, company, store, msg
         }
     },
     computed: {
+        saveData() {
+
+            this.state.message = 'I am interested in the following:\n----------------------------------------\n\n';
+            var listBarcodes = '';
+            var tech = '';
+
+            for (let barcodes in this.store.selected_barcode[this.store.currentTab]) {
+
+                tech = this.store.currentTab;
+                listBarcodes = this.store.selected_barcode[this.store.currentTab];
+            }
+
+            this.state.message += tech + ': ' + listBarcodes + '\n\n';
+
+        }
 
     },
     methods: {
@@ -70,6 +88,7 @@ export default {
             return false;
 
         },
+
     }
 }
 </script>
@@ -81,6 +100,7 @@ export default {
             <p class="info-text text-center margin-bottom-50 form-center"> Enter your name and email and get access to
                 all the
                 goodies.</p>
+
             <div>
                 <form id="quote" novalidate="novalidate" method="post" :action="action" enctype="multipart/form-data">
                     <input type="hidden" id="recaptcha_token" name="recaptcha_token" :data-sitekey="sitekey" />
@@ -90,8 +110,9 @@ export default {
                                 <label for="first-name" class="sr-only"></label>
                                 <input class="input   " type="text" id="first-name" name="first_name"
                                     v-model="state.first_name" placeholder="First Name"
-                                    :class="{ 'notvalid': (v$.first_name.$error)}" />
+                                    :class="{ 'notvalid': (v$.first_name.$error) }" />
                                 <div class="form-message animated">
+
                                     <span class="validate-msg" v-if="v$.first_name.$error">
                                         {{ v$.first_name.$errors[0].$message }}
                                     </span>
@@ -128,8 +149,10 @@ export default {
                     <div class="form-line margin-bottom-30">
                         <label for="message" class="sr-only"></label>
                         <textarea class="input validate" id="message" name="message" placeholder="Message" rows="10"
-                            v-model="state.message" :class="{ 'notvalid': (v$.message.$error) }"></textarea>
+                            v-model="state.message"
+                            :class="{ 'notvalid': (v$.message.$error) }"> {{ saveData }} </textarea>
                         <div class="form-message animated">
+
                             <span class="validate-msg" v-if="v$.message.$error">
                                 {{ v$.message.$errors[0].$message }}
                             </span>

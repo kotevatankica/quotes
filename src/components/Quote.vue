@@ -4,7 +4,8 @@ import QuoteWrapper from './QuoteWrapper.vue';
 export default {
 
     components: {
-        QuoteWrapper
+        QuoteWrapper,
+        
     },
 
 
