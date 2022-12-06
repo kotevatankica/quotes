@@ -4,15 +4,16 @@ import useValidate from '@vuelidate/core'
 import { required, minLength, email, sameAs, helpers } from '@vuelidate/validators'
 import VueNextSelect from 'vue-next-select'
 import 'vue-next-select/dist/index.min.css'
-import { stateStore } from "../stores/store";
 export default {
     components: {
         'vue-select': VueNextSelect,
     },
+    props: {
+        selected_barcode: {},
+        currentTab: {},
 
-    setup() {
-        const store = stateStore();
-        // const selected_barcode = ref(store.selected_barcode);
+    },
+    setup(props) {
         const state = reactive({
             first_name: '',
             last_name: '',
@@ -53,25 +54,21 @@ export default {
 
         return {
 
-            state, v$, create_acc, create_license, support_countries, company, store, msg
+            state, v$, create_acc, create_license, support_countries, company, msg
         }
     },
     computed: {
         saveData() {
 
-            this.state.message = 'I am interested in the following:\n----------------------------------------\n\n';
+            this.state.message = 'I am interested in the following technologies:\n----------------------------------------\n\n';
             var listBarcodes = '';
             var tech = '';
 
-            for (let barcodes in this.store.selected_barcode[this.store.currentTab]) {
-
-                tech = this.store.currentTab;
-                listBarcodes = this.store.selected_barcode[this.store.currentTab];
-            }
 
             this.state.message += tech + ': ' + listBarcodes + '\n\n';
 
-        }
+        },
+
 
     },
     methods: {
@@ -100,7 +97,6 @@ export default {
             <p class="info-text text-center margin-bottom-50 form-center"> Enter your name and email and get access to
                 all the
                 goodies.</p>
-
             <div>
                 <form id="quote" novalidate="novalidate" method="post" :action="action" enctype="multipart/form-data">
                     <input type="hidden" id="recaptcha_token" name="recaptcha_token" :data-sitekey="sitekey" />

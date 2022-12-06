@@ -1,23 +1,23 @@
 <script>
 import { ref } from 'vue'
 import QuoteWrapper from './QuoteWrapper.vue';
+import Form from './Form.vue';
 export default {
 
     components: {
         QuoteWrapper,
-        
+        Form,
+
     },
-
-
     setup() {
 
         const technologies = [
-            { id: 1, name: 'iOS',svgName: 'iOS', width: 62, height: 29, selected_barcodes: [] },
-            { id: 2, name: 'Android',svgName: 'android', width: 116, height: 26, selected_barcodes: [] },
-            { id: 3, name: 'Cordova',svgName: 'cordova', width: 99, height: 26, selected_barcodes: [] },
-            { id: 4, name: 'Ionic',svgName: 'ionic', width: 92, height: 31, selected_barcodes: [] },
-            { id: 5, name: 'Xamarin',svgName: 'xamarin', width: 98, height: 31, selected_barcodes: [] },
-            { id: 6, name: 'React',svgName: 'react', width: 101, height: 31, selected_barcodes: [] },
+            { id: 1, name: 'iOS', svgName: 'iOS', width: 62, height: 29, selected_barcodes: [] },
+            { id: 2, name: 'Android', svgName: 'android', width: 116, height: 26, selected_barcodes: [] },
+            { id: 3, name: 'Cordova', svgName: 'cordova', width: 99, height: 26, selected_barcodes: [] },
+            { id: 4, name: 'Ionic', svgName: 'ionic', width: 92, height: 31, selected_barcodes: [] },
+            { id: 5, name: 'Xamarin', svgName: 'xamarin', width: 98, height: 31, selected_barcodes: [] },
+            { id: 6, name: 'React', svgName: 'react', width: 101, height: 31, selected_barcodes: [] },
         ];
 
         const barcodes = [
@@ -38,12 +38,6 @@ export default {
             technologies, barcodes
         }
     },
-    methods: {
-        dis: function (selected_barcodes) {
-            console.log(selected_barcode[currentTab])
-            // v-on:selected-barcodes="dis"
-        }
-    }
 
 
 }
@@ -51,7 +45,8 @@ export default {
 </script>
 
 <template>
-    <QuoteWrapper :barcodes="barcodes" :tech="technologies" ></QuoteWrapper>
+    <QuoteWrapper :barcodes="barcodes" :tech="technologies"></QuoteWrapper>
+    <Form></Form>
 </template>
 
 <style scoped>

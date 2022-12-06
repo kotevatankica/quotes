@@ -2,26 +2,20 @@
 import { ref } from 'vue'
 import $ from 'jquery'
 import 'bootstrap/dist/css/bootstrap.min.css'
-
 import 'bootstrap/dist/css/bootstrap.css';
-
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import { stateStore } from "../stores/store";
 export default {
     props: {
         barcodes: Array,
         tech: Array,
     },
     setup(props) {
-
-        const store = stateStore();
-        const selected_tech = ref();
         const currentTab = ref('iOS');
-        const selectAll = ref(false);
+        const selectAll = ref([false]);
         var sb = {};
         $.each(props.tech, (i, el) => {
-            sb[el.name] = (store.selected_barcode[el.name]) ? store.selected_barcode[el.name] : []
+            sb[el.name] = []
 
         });
 
@@ -29,46 +23,40 @@ export default {
 
         return {
 
-            currentTab, selected_barcode, selected_tech, selectAll, store
-        }
-    },
-    computed: {
-
-        storeSelectedBarcode() {
-
-            this.store.selected_barcode = this.selected_barcode;
+            currentTab, selected_barcode, selectAll,
         }
     },
 
     methods: {
         selectedTab(selectedTab) {
 
-            this.store.currentTab = selectedTab;
+            this.currentTab = selectedTab;
 
         },
         selectAllBarcodes(e) {
 
-            this.selected_barcode[this.store.currentTab] = [];
+            this.selected_barcode[this.currentTab] = [];
 
-            if (e.target.checked) {
+            if (!this.selectAll[this.currentTab]) {
 
                 for (let i in this.barcodes) {
-                    this.selected_barcode[this.store.currentTab].push(this.barcodes[i].display.toString())
+                    this.selected_barcode[this.currentTab].push(this.barcodes[i].display.toString())
 
                 }
             }
 
         },
         select: function () {
-            this.selectAll = false;
+            this.selectAll[this.currentTab] = false;
         },
         done() {
 
-            this.store.selected_barcode[this.store.currentTab] = this.selected_barcode[this.currentTab];
+            // this.selected_barcode[this.currentTab] = this.selected_barcode[this.currentTab];
         },
         removeChoices(platform) {
 
             this.selected_barcode[platform] = [];
+            this.selectAll[platform] = false;
         }
 
     },
@@ -79,8 +67,6 @@ export default {
 
 <template>
 
-
-
     <div id="quote">
         <div class="box_active container">
             <div class="text-center">
@@ -89,7 +75,7 @@ export default {
             </div>
             <div class="m-grid-12 grid-flex rel">
                 <p class="option-tab tech" @click="selectedTab(row.name)" v-for="row in tech"
-                    :class="{ 'tabchecked ': store.currentTab == row.name }">
+                    :class="{ 'tabchecked ': currentTab == row.name }">
                 <div class="tab">
                     <svg class="abs " :width="row.width" :height="row.height">
                         <use :xlink:href="('#' + row.svgName)"></use>
@@ -99,16 +85,17 @@ export default {
             </div>
 
             <div class="down rel shadow-box sm-padding-30-50 mb-sm-padding-20 margin-bottom-50">
-                <h3 class="shadow-box-title text-center">{{ store.currentTab }}</h3>
+                <h3 class="shadow-box-title text-center">{{ currentTab }}</h3>
                 <div class="margin-30-0 mb-sm-flex-row-centered">
                     <label v-for="row in barcodes" :for="('ss_' + row.short)">
-                        <input :id="('ss_' + row.short)" type="checkbox" v-model="selected_barcode[store.currentTab]"
+                        <input :id="('ss_' + row.short)" type="checkbox" v-model="selected_barcode[currentTab]"
                             :value="row.display" @change="select" />
                         <span class="button oval">{{ row.display }}</span>
 
                     </label>
                     <label class="all" for="all">
-                        <input type="checkbox" value="all" id="all" v-model="selectAll" @click="selectAllBarcodes">
+                        <input type="checkbox" value="all" id="all" v-model="selectAll[currentTab]"
+                            @click="selectAllBarcodes">
                         <span class="button oval">Select All</span>
                     </label>
                 </div>
@@ -116,7 +103,7 @@ export default {
                 <div class="text-center">
                     <button class="button button-small link black text-center" @click="done">Done</button>
                 </div>
-                <p class="support" v-if="(store.currentTab != 'iOS' && store.currentTab != 'Android')">
+                <p class="support" v-if="(currentTab != 'iOS' && currentTab != 'Android')">
                     *We still don’t support this platform/framework, but feel free to make a request, and we will make
                     our best to make it available as soon as possible
 
@@ -254,7 +241,5 @@ export default {
 </template>
 
 <style scoped>
-.mdi-close-circle::before {
-    content: "\F0159";
-}
+
 </style>
