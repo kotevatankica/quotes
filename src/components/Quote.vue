@@ -1,13 +1,10 @@
 <script>
 import { ref } from 'vue'
 import QuoteWrapper from './QuoteWrapper.vue';
-import Form from './Form.vue';
 export default {
 
     components: {
         QuoteWrapper,
-        Form,
-
     },
     setup() {
 
@@ -46,7 +43,6 @@ export default {
 
 <template>
     <QuoteWrapper :barcodes="barcodes" :tech="technologies"></QuoteWrapper>
-    <Form></Form>
 </template>
 
 <style scoped>

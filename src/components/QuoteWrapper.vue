@@ -5,10 +5,14 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import Form from './Form.vue';
 export default {
     props: {
         barcodes: Array,
         tech: Array,
+    },
+    components: {
+        Form
     },
     setup(props) {
         const currentTab = ref('iOS');
@@ -50,8 +54,10 @@ export default {
             this.selectAll[this.currentTab] = false;
         },
         done() {
-
-            // this.selected_barcode[this.currentTab] = this.selected_barcode[this.currentTab];
+            $('html,body').animate({
+                scrollTop: $("#contact-info").offset().top
+            },
+                'slow');
         },
         removeChoices(platform) {
 
@@ -133,7 +139,10 @@ export default {
             </transition-group>
         </div>
     </div>
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="hidden">
+    <div>
+        <Form id="contact-info" :selected_barcode="selected_barcode" :currentTab="currentTab"></Form>
+
+    </div> <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="hidden">
 
         <symbol id="android" viewBox="0 0 157.53 24">
             <title>Android logo</title>

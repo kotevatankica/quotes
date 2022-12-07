@@ -1,5 +1,5 @@
 <script>
-import { ref, reactive, computed } from 'vue';
+import { ref, reactive, computed, toHandlers } from 'vue';
 import useValidate from '@vuelidate/core'
 import { required, minLength, email, sameAs, helpers } from '@vuelidate/validators'
 import VueNextSelect from 'vue-next-select'
@@ -64,8 +64,17 @@ export default {
             var listBarcodes = '';
             var tech = '';
 
+            Object.keys(this.selected_barcode).forEach(el => {
+                if (this.selected_barcode[el].length === 0)
+                    return;
+                else {
+                    tech = el;
+                    listBarcodes = this.selected_barcode[tech];
+                    this.state.message += tech + ': ' + listBarcodes + '\n\n';
+                }
 
-            this.state.message += tech + ': ' + listBarcodes + '\n\n';
+
+            });
 
         },
 
@@ -254,5 +263,7 @@ export default {
 </template>
 
 <style scoped>
-
+.mdi-checkbox-blank-outline::before {
+    content: "\F0131" !important;
+}
 </style>
