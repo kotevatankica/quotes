@@ -1553,7 +1553,6 @@ label.radio_type_btn.radio_selected {
 }
 .grid-flex {
   display: flex;
-  flex-wrap: wrap;
 }
 .m-grid-6 {
   width: 50%;
@@ -2395,14 +2394,14 @@ footer .nav > li > a {
   }
 }
 @media (max-width: 991px) {
-  #quote .tabs.abs > .rel:first-child {
+  /* #quote .tabs.abs > .rel:first-child {
     top: 35px;
     z-index: 1;
   }
 
   #quote .tabs.abs > .rel:nth-child(2) {
     z-index: 2;
-  }
+  } */
 
   .tab {
     border-radius: 20px;
@@ -2415,6 +2414,7 @@ footer .nav > li > a {
   }
 
   .down {
+  
     z-index: 2;
   }
 
@@ -2426,6 +2426,7 @@ footer .nav > li > a {
   .mb-sm-padding-20 {
     padding: 20px;
   }
+
   .dots,
   #top-content-phone {
     display: none;
@@ -2439,22 +2440,109 @@ footer .nav > li > a {
     margin-bottom: 50px;
   }
 }
-@media (max-width: 589px) {
-  #quote .tabs.abs > .rel:first-child .option-tab:first-child,
-  #quote .tabs.abs > .rel:first-child .option-tab:first-child + .option-tab,
-  #quote .tabs.abs > .rel:nth-child(2) .option-tab:last-child {
-    position: absolute;
-    top: -70px;
+
+@media only screen and (max-width: 600px) {
+  .box {
+    display: flex;
+    flex-wrap: wrap;
   }
-  #quote .tabs.abs > .rel:first-child .option-tab:first-child,
-  #quote .tabs.abs > .rel:nth-child(2) .option-tab:last-child {
-    z-index: -1;
+  .box p {
+    flex: 1 1 150px;
   }
-  #quote .tabs.abs > .rel:first-child .option-tab:first-child + .option-tab,
-  #quote .tabs.abs > .rel:nth-child(2) .option-tab:last-child {
-    right: 0;
+  .box p:nth-child(1),
+  .box p:nth-child(2) {
+    top: 60px;
+  }
+  .box p:nth-child(3),
+  .box p:nth-child(4) {
+    top: 30px;
+    z-index: 2;
+
+  }
+  .box p:nth-child(5),
+  .box p:nth-child(6) {
+    z-index: 2;
+
   }
 }
+
+@media only screen and (min-width: 600px) {
+  .box {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .box p {
+    flex: 1 1 150px;
+  }
+  .box p:nth-child(1),
+  .box p:nth-child(2) {
+    top: 60px;
+  }
+  .box p:nth-child(3),
+  .box p:nth-child(4) {
+    top: 30px;
+    z-index: 2;
+  }
+  .box p:nth-child(5),
+  .box p:nth-child(6) {
+    z-index: 2;
+
+  }
+}
+@media only screen and (min-width: 768px) {
+  .box {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .box p {
+    flex: 1 1 200px;
+  }
+
+  .box p:nth-child(-n + 3) {
+    top: 30px;
+  }
+  .box p:nth-child(n + 4):nth-child(-n + 6) {
+    top: 0;
+    z-index: 2;
+  }
+
+  /* .tab-over {
+    border: 1px solid gray;
+    position: absolute;
+    height: 45px;
+    left: 150px;
+    width: 79%;
+    background: #fff;
+    z-index: 1;
+    top: 174px;
+  } */
+}
+
+@media only screen and (min-width: 992px) {
+  .box {
+    display: flex;
+  }
+  .box p {
+    flex: 1 1 100px;
+  }
+
+  .box p:nth-child(-n + 3) {
+    top: 0;
+  }
+  .box p:nth-child(n + 4):nth-child(-n + 6) {
+    top: 0;
+  }
+  /* .tab-over {
+    position: absolute;
+    height: 45px;
+    left: 150px;
+    width: 79%;
+    background: #fff;
+    z-index: 1;
+    top: 174px;
+  } */
+}
+
 @media (max-width: 400px) {
   .button-container > a,
   .button-container > button,

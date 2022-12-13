@@ -79,7 +79,8 @@ export default {
                 <h2>Request a quote</h2>
                 <p>With more details comes a better quote.</p>
             </div>
-            <div class="m-grid-12 grid-flex rel">
+          <div class="u">
+            <div class=" box grid-flex rel">
                 <p class="option-tab tech" @click="selectedTab(row.name)" v-for="row in tech"
                     :class="{ 'tabchecked ': currentTab == row.name }">
                 <div class="tab">
@@ -89,6 +90,8 @@ export default {
                 </div>
                 </p>
             </div>
+          </div>
+            
 
             <div class="down rel shadow-box sm-padding-30-50 mb-sm-padding-20 margin-bottom-50">
                 <h3 class="shadow-box-title text-center">{{ currentTab }}</h3>
